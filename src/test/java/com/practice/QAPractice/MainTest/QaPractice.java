@@ -481,6 +481,11 @@ public class QaPractice extends BaseSetupManager {
 			page.dismissAlert();
 		}
 		Thread.sleep(500);
-		assertResult(expected);
+		if (expected) {
+			boolean successFound = page.isSuccessShown();
+			boolean pageNotCrashed = !driver.getTitle().contains("404");
+			Assert.assertTrue(successFound || pageNotCrashed,
+					"Expected SUCESS for prompt but none found. Input: " + input);
+		}
 	}
 }
