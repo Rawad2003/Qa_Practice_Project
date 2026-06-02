@@ -279,9 +279,10 @@ public class QaPractice extends BaseSetupManager {
 			page.selectWhen(when);
 			Thread.sleep(500);
 		}
+		String urlBefore = driver.getCurrentUrl();
 		page.submitMulti();
 		Thread.sleep(500);
-		assertResult(expected);
+		assertResult(expected, urlBefore);
 	}
 
 	// 4.2 MULTI SELECT ALL COMBINATIONS
