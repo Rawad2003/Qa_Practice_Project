@@ -2,6 +2,8 @@ package com.practice.QAPractice.Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.practice.QAPractice.BasePage.BasePage;
 
@@ -29,7 +31,15 @@ public class TextAreaPage extends BasePage {
 	}
 
 	public void submitSingle() {
-		driver.findElement(submitButton).click();
+		WebElement btn = driver.findElement(submitButton);
+		Actions scrollAction = new Actions(driver);
+		scrollAction.scrollToElement(btn).perform();
+		try {
+			Thread.sleep(300);
+		} catch (Exception e) {
+		}
+		btn.click();
+
 	}
 
 	public void navigateToMultiple() {
@@ -52,6 +62,13 @@ public class TextAreaPage extends BasePage {
 	}
 
 	public void submitMultiple() {
-		driver.findElement(submitButton).click();
+		WebElement btn = driver.findElement(submitButton);
+		Actions scrollAction = new Actions(driver);
+		scrollAction.scrollToElement(btn).perform();
+		try {
+			Thread.sleep(300);
+		} catch (Exception e) {
+		}
+		btn.click();
 	}
 }
