@@ -5,3 +5,7 @@ classpath
 .classpath
 .project
 *.log
+current/
+*.zip
+target/
+test-output/
