@@ -1,16 +1,8 @@
+target/
 test-output/
-target
+*.zip
+*.class
+for claude/
 .settings/
-classpath
 .classpath
 .project
-*.log
-current/
-*.zip
-target/
-test-output/
-target/
-test-output/
-*.zip
-current/
-for claude/
