@@ -156,9 +156,10 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		page.selectState(state);
 		Thread.sleep(500);
+		String urlBefore = driver.getCurrentUrl();
 		page.submitDisabledButton();
 		Thread.sleep(500);
-		assertResult(expected);
+		assertResult(expected, urlBefore);
 	}
 
 	// 3.1 SINGLE CHECKBOX
