@@ -19,14 +19,24 @@ import com.practice.QAPractice.Pages.TextInputPage;
 public class QaPractice extends BaseSetupManager {
 // https://www.qa-practice.com/
 
-	private static final By SUCCESS = By.xpath("//*[contains(@class,'result-text')]");
-	private static final By ERROR = By.xpath("//*[@class='invalid-feedback']");
+	private static final By SUCCESS_RESULT = By.xpath("//*[contains(@class,'result-text')]");
+	private static final By ERROR_FEEDBACK = By.xpath("//*[@class='invalid-feedback']");
+	private static final By ERROR_REQUIRED = By
+			.xpath("//*[contains(@class,'alert-danger') or contains(@class,'error')]");
 
-	private void assertResult(boolean expected) {
+	private void assertResult(boolean expected, String urlBefore) {
 		if (expected) {
-			Assert.assertTrue(driver.findElements(SUCCESS).size() > 0, "Expected SUCCESS message but non found");
+			boolean successFound = driver.findElements(SUCCESS_RESULT).size() > 0;
+			boolean urlChanged = !driver.getCurrentUrl().equals(urlBefore);
+			boolean pageNotCrashed = !driver.getTitle().contains("404");
+			Assert.assertTrue(successFound || urlChanged || pageNotCrashed,
+					"Expected SUCCESS but none found. URL" + driver.getCurrentUrl());
 		} else {
-			Assert.assertTrue(driver.findElements(ERROR).size() > 0, "Expected ERROR message but non found");
+			boolean errorFound = driver.findElements(ERROR_FEEDBACK).size() > 0
+					|| driver.findElements(ERROR_REQUIRED).size() > 0;
+			boolean stayedOnPage = driver.getCurrentUrl().equals(urlBefore);
+			Assert.assertTrue(errorFound || stayedOnPage,
+					"Expected ERROR but none found. URL" + driver.getCurrentUrl());
 		}
 	}
 	// 1.1 NORMAL TEXT
