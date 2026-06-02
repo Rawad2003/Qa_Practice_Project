@@ -9,3 +9,8 @@ current/
 *.zip
 target/
 test-output/
+target/
+test-output/
+*.zip
+current/
+for claude/
