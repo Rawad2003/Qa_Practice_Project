@@ -217,9 +217,10 @@ public class QaPractice extends BaseSetupManager {
 			page.clickCheckThree();
 			Thread.sleep(500);
 		}
+		String urlBefore = driver.getCurrentUrl();
 		page.submitMulti();
 		Thread.sleep(500);
-		assertResult(expected);
+		assertResult(expected, urlBefore);
 	}
 
 	// 4.1 SINGLE SELECT
