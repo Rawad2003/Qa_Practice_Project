@@ -1,9 +1,20 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.MainTest;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import com.practice.QAPractice.BasePage.BaseSetupManager;
+import com.practice.QAPractice.Pages.AlertPage;
+import com.practice.QAPractice.Pages.ButtonPage;
+import com.practice.QAPractice.Pages.CheckboxPage;
+import com.practice.QAPractice.Pages.EmailPage;
+import com.practice.QAPractice.Pages.NewTabPage;
+import com.practice.QAPractice.Pages.PasswordPage;
+import com.practice.QAPractice.Pages.SelectPage;
+import com.practice.QAPractice.Pages.TextAreaPage;
+import com.practice.QAPractice.Pages.TextInputPage;
 
 public class QaPractice extends BaseSetupManager {
 // https://www.qa-practice.com/

@@ -1,7 +1,9 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.MiddleBar;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import com.practice.QAPractice.BasePage.BasePage;
 
 public class MiddleBarPage extends BasePage {
 	private static final String BASE_URL = "https://www.qa-practice.com/";

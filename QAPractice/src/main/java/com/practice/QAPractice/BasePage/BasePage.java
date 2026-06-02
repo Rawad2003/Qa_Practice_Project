@@ -1,4 +1,4 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.BasePage;
 
 import org.openqa.selenium.WebDriver;
 

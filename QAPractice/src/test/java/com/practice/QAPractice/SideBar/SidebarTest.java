@@ -1,6 +1,9 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.SideBar;
 
 import org.testng.annotations.Test;
+
+import com.practice.QAPractice.BasePage.BaseSetupManager;
+import com.practice.QAPractice.SideBar.SidebarPage;
 
 import java.util.Arrays;
 import java.util.HashSet;

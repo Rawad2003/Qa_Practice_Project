@@ -1,9 +1,11 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+
+import com.practice.QAPractice.BasePage.BasePage;
 
 public class TextInputPage extends BasePage {
 	private static final String URL = "https://www.qa-practice.com/elements/input/simple";

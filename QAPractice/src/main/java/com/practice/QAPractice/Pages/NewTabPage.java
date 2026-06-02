@@ -1,7 +1,9 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import com.practice.QAPractice.BasePage.BasePage;
 
 public class NewTabPage extends BasePage {
 	private static final String URL_LINK = "https://www.qa-practice.com/elements/new_tab/link";

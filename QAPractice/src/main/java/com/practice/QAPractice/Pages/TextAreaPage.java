@@ -1,7 +1,9 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import com.practice.QAPractice.BasePage.BasePage;
 
 public class TextAreaPage extends BasePage {
 	private static final String URL_SINGLE = "https://www.qa-practice.com/elements/textarea/single";

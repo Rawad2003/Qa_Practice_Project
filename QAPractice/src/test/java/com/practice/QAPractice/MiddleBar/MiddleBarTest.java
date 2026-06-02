@@ -1,9 +1,12 @@
-package com.practice.QAPractice;
+package com.practice.QAPractice.MiddleBar;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import com.practice.QAPractice.BasePage.BaseSetupManager;
+import com.practice.QAPractice.MiddleBar.MiddleBarPage;
 
 public class MiddleBarTest extends BaseSetupManager {
 	@DataProvider(name = "middleBarVisibilityData")
