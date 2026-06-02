@@ -382,9 +382,10 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		page.enterSingleText(input);
 		Thread.sleep(500);
+		String urlBefore = driver.getCurrentUrl();
 		page.submitSingle();
 		Thread.sleep(500);
-		assertResult(expected);
+		assertResult(expected, urlBefore);
 	}
 
 	// 6.2 MULTIPLE TEXTAREAS
