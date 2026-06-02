@@ -415,9 +415,10 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		page.enterThirdChapter(third);
 		Thread.sleep(500);
+		String urlBefore = driver.getCurrentUrl();
 		page.submitMultiple();
 		Thread.sleep(500);
-		assertResult(expected);
+		assertResult(expected, urlBefore);
 	}
 
 	// 7.1 NORMAL ALERT
