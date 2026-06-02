@@ -59,9 +59,10 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		page.enterText(input);
 		Thread.sleep(500);
+		String urlBefore = driver.getCurrentUrl();
 		page.submit();
 		Thread.sleep(500);
-		assertResult(expected);
+		assertResult(expected, urlBefore);
 	}
 
 	// 1.2 EMAIL FIELD
