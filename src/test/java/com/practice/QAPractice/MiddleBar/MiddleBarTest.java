@@ -6,7 +6,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.practice.QAPractice.BasePage.BaseSetupManager;
-import com.practice.QAPractice.MiddleBar.MiddleBarPage;
 
 public class MiddleBarTest extends BaseSetupManager {
 	@DataProvider(name = "middleBarVisibilityData")
