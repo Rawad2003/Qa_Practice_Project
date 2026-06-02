@@ -246,8 +246,9 @@ public class QaPractice extends BaseSetupManager {
 			page.submitSingle();
 
 		}
+		String urlBefore = driver.getCurrentUrl();
 		Thread.sleep(500);
-		assertResult(expected);
+		assertResult(expected, urlBefore);
 	}
 
 	// 4.2 MULTI SELECT VALIDATION
