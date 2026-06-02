@@ -12,6 +12,8 @@ public class AlertPage extends BasePage {
 	private static final String URL_PROMPT = "https://www.qa-practice.com/elements/alert/prompt";
 
 	private final By triggerButton = By.xpath("//a[@class='a-button']");
+	private final By successResult = By.xpath("//*[contains(@class,'result-text')]");
+	private final By errorResult = By.xpath("//*[contains(@class,'invalid-feedback')]");
 
 	public AlertPage(WebDriver driver) {
 		super(driver);
@@ -42,13 +44,21 @@ public class AlertPage extends BasePage {
 	}
 
 	public void sendKeysToALert(String input) {
-		Alert alert = driver.switchTo().alert();
-		alert.sendKeys(input);
+		driver.switchTo().alert().sendKeys(input);
 	}
 
 	public void sendKeysAndAccept(String input) {
 		Alert alert = driver.switchTo().alert();
-		alert.sendKeys(input);
+		if (input != null)
+			alert.sendKeys(input);
 		alert.accept();
+	}
+
+	public boolean isSuccessShown() {
+		return driver.findElements(successResult).size() > 0;
+	}
+
+	public boolean isErrorShown() {
+		return driver.findElements(errorResult).size() > 0;
 	}
 }
