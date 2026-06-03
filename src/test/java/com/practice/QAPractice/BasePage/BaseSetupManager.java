@@ -34,7 +34,7 @@ public class BaseSetupManager {
 		// ── Step 2: Ask user for the URL to test ─────────────────────────────
 		System.out.println("========================================");
 		System.out.print("Enter the URL to test (e.g. https://example.com): ");
-		baseUrL = sc.nextLine().trim();
+		baseUrL = "https://www.qa-practice.com/";
 
 		// ── Step 3: Setup driver automatically using WebDriverManager ─────────
 		switch (choice) {
