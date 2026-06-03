@@ -40,4 +40,16 @@ public class DragAndDropPage extends BasePage {
 		WebElement target = driver.findElement(dropAbleBox);
 		new Actions(driver).clickAndHold(source).moveToElement(target).moveByOffset(1, 1).release().perform();
 	}
+
+	public String getDropAbleText() {
+		return driver.findElement(dropAbleText).getText();
+	}
+
+	public boolean isDragTextDropped() {
+		return getDropAbleText().contains("Dropped!");
+	}
+
+	public boolean isDropHereTextVisible() {
+		return getDropAbleText().contains("Drop here");
+	}
 }
