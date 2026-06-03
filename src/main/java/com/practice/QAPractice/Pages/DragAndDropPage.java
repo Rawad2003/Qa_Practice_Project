@@ -17,4 +17,12 @@ public class DragAndDropPage extends BasePage {
 		super(driver);
 	}
 
+	public void navigateToBoxes() {
+		driver.get(URL_BOXES);
+	}
+
+	public void navigateToImages() {
+		driver.get(URL_IMAGES);
+	}
+
 }
