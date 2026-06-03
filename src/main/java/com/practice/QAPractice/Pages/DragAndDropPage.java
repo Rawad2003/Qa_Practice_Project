@@ -11,9 +11,11 @@ public class DragAndDropPage extends BasePage {
 	private static final String URL_BOXES = "https://www.qa-practice.com/elements/dragndrop/boxes";
 	private static final String URL_IMAGES = "https://www.qa-practice.com/elements/dragndrop/images";
 
-	private final By dropAbleBox = By.cssSelector("#rect-droppable");
-	private final By dragAbleBox = By.cssSelector("#rect-draggable");
+	private final By boxDropAbleBox = By.cssSelector("#rect-droppable");
+	private final By boxDragAbleBox = By.cssSelector("#rect-draggable");
 	private final By dropAbleText = By.cssSelector("#text-droppable");
+	private final By imageDropAbleBox = By.cssSelector("#rect-droppable2");
+	private final By imageDragAbleBox = By.cssSelector("#rect-droppable1");
 
 	public DragAndDropPage(WebDriver driver) {
 		super(driver);
@@ -27,17 +29,31 @@ public class DragAndDropPage extends BasePage {
 		driver.get(URL_IMAGES);
 	}
 
-	public boolean isDragAbleVisible() {
-		return driver.findElement(dragAbleBox).isDisplayed();
+	public boolean isBoxDragAbleVisible() {
+		return driver.findElement(boxDragAbleBox).isDisplayed();
 	}
 
-	public boolean isDropAbleVisible() {
-		return driver.findElement(dragAbleBox).isDisplayed();
+	public boolean isBoxDropAbleVisible() {
+		return driver.findElement(boxDropAbleBox).isDisplayed();
 	}
 
-	public void dragAndDrop() {
-		WebElement source = driver.findElement(dragAbleBox);
-		WebElement target = driver.findElement(dropAbleBox);
+	public boolean isImageDragAbleVisible() {
+		return driver.findElement(imageDragAbleBox).isDisplayed();
+	}
+
+	public boolean isImageDropAbleVisible() {
+		return driver.findElement(imageDropAbleBox).isDisplayed();
+	}
+
+	public void boxDragAndDrop() {
+		WebElement source = driver.findElement(boxDragAbleBox);
+		WebElement target = driver.findElement(boxDropAbleBox);
+		new Actions(driver).clickAndHold(source).moveToElement(target).moveByOffset(1, 1).release().perform();
+	}
+
+	public void imageDragAndDrop() {
+		WebElement source = driver.findElement(imageDragAbleBox);
+		WebElement target = driver.findElement(imageDropAbleBox);
 		new Actions(driver).clickAndHold(source).moveToElement(target).moveByOffset(1, 1).release().perform();
 	}
 
@@ -45,11 +61,16 @@ public class DragAndDropPage extends BasePage {
 		return driver.findElement(dropAbleText).getText();
 	}
 
-	public boolean isDragTextDropped() {
+	public boolean isBoxDragTextDropped() {
 		return getDropAbleText().contains("Dropped!");
 	}
 
-	public boolean isDropHereTextVisible() {
+	public boolean isBoxDropHereTextVisible() {
 		return getDropAbleText().contains("Drop here");
 	}
+
+	public boolean isImageDragTextDropped() {
+		return getDropAbleText().contains("Dropped!");
+	}
+
 }
