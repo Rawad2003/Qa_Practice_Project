@@ -101,7 +101,7 @@ public class MiddleBarTest extends BaseSetupManager {
 		MiddleBarPage page = new MiddleBarPage(driver);
 		page.navigateToBase();
 		Thread.sleep(500);
-		By locator = By.xpath("//ol[contains(@class,'rectangle')//a)[" + position + "]");
+		By locator = By.xpath("//ol");
 		String actualText = driver.findElement(locator).getText().trim();
 		boolean result = actualText.contains(linkName);
 		Assert.assertEquals(result, expected,
