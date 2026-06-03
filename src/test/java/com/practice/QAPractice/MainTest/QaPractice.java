@@ -17,7 +17,6 @@ import com.practice.QAPractice.Pages.TextAreaPage;
 import com.practice.QAPractice.Pages.TextInputPage;
 
 public class QaPractice extends BaseSetupManager {
-// https://www.qa-practice.com/
 
 	private static final By SUCCESS_RESULT = By.xpath("//*[contains(@class,'result-text')]");
 	private static final By ERROR_FEEDBACK = By.xpath("//*[@class='invalid-feedback']");
