@@ -25,4 +25,11 @@ public class DragAndDropPage extends BasePage {
 		driver.get(URL_IMAGES);
 	}
 
+	public boolean isDragAbleVisible() {
+		return driver.findElement(dragAbleBox).isDisplayed();
+	}
+
+	public boolean isDropAbleVisible() {
+		return driver.findElement(dragAbleBox).isDisplayed();
+	}
 }
