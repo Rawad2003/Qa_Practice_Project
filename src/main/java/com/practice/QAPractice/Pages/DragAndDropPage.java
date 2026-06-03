@@ -2,6 +2,8 @@ package com.practice.QAPractice.Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.practice.QAPractice.BasePage.BasePage;
 
@@ -31,5 +33,11 @@ public class DragAndDropPage extends BasePage {
 
 	public boolean isDropAbleVisible() {
 		return driver.findElement(dragAbleBox).isDisplayed();
+	}
+
+	public void dragAndDrop() {
+		WebElement source = driver.findElement(dragAbleBox);
+		WebElement target = driver.findElement(dropAbleBox);
+		new Actions(driver).clickAndHold(source).moveToElement(target).moveByOffset(1, 1).release().perform();
 	}
 }
