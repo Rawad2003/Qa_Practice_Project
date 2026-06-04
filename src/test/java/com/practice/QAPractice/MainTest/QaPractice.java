@@ -6,15 +6,15 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.practice.QAPractice.BasePage.BaseSetupManager;
-import com.practice.QAPractice.Pages.AlertPage;
-import com.practice.QAPractice.Pages.ButtonPage;
-import com.practice.QAPractice.Pages.CheckboxPage;
-import com.practice.QAPractice.Pages.EmailPage;
-import com.practice.QAPractice.Pages.NewTabPage;
-import com.practice.QAPractice.Pages.PasswordPage;
-import com.practice.QAPractice.Pages.SelectPage;
-import com.practice.QAPractice.Pages.TextAreaPage;
-import com.practice.QAPractice.Pages.TextInputPage;
+import com.practice.QAPractice.SingleUIElementsPages.AlertPage;
+import com.practice.QAPractice.SingleUIElementsPages.ButtonPage;
+import com.practice.QAPractice.SingleUIElementsPages.CheckboxPage;
+import com.practice.QAPractice.SingleUIElementsPages.EmailPage;
+import com.practice.QAPractice.SingleUIElementsPages.NewTabPage;
+import com.practice.QAPractice.SingleUIElementsPages.PasswordPage;
+import com.practice.QAPractice.SingleUIElementsPages.SelectPage;
+import com.practice.QAPractice.SingleUIElementsPages.TextAreaPage;
+import com.practice.QAPractice.SingleUIElementsPages.TextInputPage;
 
 public class QaPractice extends BaseSetupManager {
 

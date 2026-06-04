@@ -1,4 +1,4 @@
-package com.practice.QAPractice.Pages;
+package com.practice.QAPractice.SingleUIElementsPages;
 
 import java.time.Duration;
 
