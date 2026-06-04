@@ -84,4 +84,21 @@ public class IframePage extends BasePage {
 		WebElement about = wait.until(ExpectedConditions.visibilityOfElementLocated(aboutParagraph));
 		return about.getText();
 	}
+
+	// Menu Links
+	public void clickTwitter() {
+		driver.findElement(twitterLink).click();
+	}
+
+	public void clickFacebook() {
+		driver.findElement(facebookLink).click();
+	}
+
+	public void clickEmail() {
+		driver.findElement(emailLink).click();
+	}
+
+	public void clickAlbum() {
+		driver.findElement(albumBrand).click();
+	}
 }
