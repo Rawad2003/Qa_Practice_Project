@@ -501,4 +501,13 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertTrue(page.isBoxDropHereTextVisible(), "Initial text should be 'Drop here'");
 	}
 
+	@Test(priority = 20)
+	public void test_8_1_DragAndDrop_PerformDrag() throws Exception {
+		DragAndDropPage page = new DragAndDropPage(driver);
+		page.navigateToBoxes();
+		Thread.sleep(500);
+		page.boxDragAndDrop();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isBoxDragTextDropped(), "Text should change to 'Dropped!' after drag");
+	}
 }
