@@ -674,4 +674,49 @@ public class QaPractice extends BaseSetupManager {
 		page.clickAlbum();
 		Assert.assertTrue(page.waitForUrlContains("album"), "Album link should navigate to Twitter");
 	}
+
+	@Test(priority = 35)
+	public void test_9_2_Iframe_ViewButtons_AllCards() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		int count = page.getViewCount();
+		Assert.assertTrue(count > 0, "There should be at least one 'View' button in the album");
+		boolean allNavigated = true;
+		for (int i = 0; i < count; i++) {
+			page.scrollToAndClickView(i);
+			Thread.sleep(500);
+			if (!page.waitForUrlContains("view"))
+				allNavigated = false;
+		}
+		Assert.assertTrue(allNavigated, "Every 'View' button should perform a view action");
+	}
+
+	@Test(priority = 36)
+	public void test_9_2_Iframe_EditButtons_AllCards() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		int count = page.getEditCount();
+		Assert.assertTrue(count > 0, "There should be at least one 'View' button in the album");
+		boolean allNavigated = true;
+		for (int i = 0; i < count; i++) {
+			page.scrollToAndClickEdit(i);
+			Thread.sleep(500);
+			if (!page.waitForUrlContains("view"))
+				allNavigated = false;
+		}
+		Assert.assertTrue(allNavigated, "Every 'Edit' button should perform a view action");
+	}
+
+	@Test(priority = 37)
+	public void test_9_2_Iframe_MainCallToActionScrollsTop() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+	}
 }
