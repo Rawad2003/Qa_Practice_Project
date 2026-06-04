@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.practice.QAPractice.BasePage.BaseSetupManager;
+import com.practice.QAPractice.FormsPage.PracticeFormPage;
 import com.practice.QAPractice.SingleUIElementsPages.AlertPage;
 import com.practice.QAPractice.SingleUIElementsPages.ButtonPage;
 import com.practice.QAPractice.SingleUIElementsPages.CheckboxPage;
@@ -14,6 +15,7 @@ import com.practice.QAPractice.SingleUIElementsPages.EmailPage;
 import com.practice.QAPractice.SingleUIElementsPages.IframePage;
 import com.practice.QAPractice.SingleUIElementsPages.NewTabPage;
 import com.practice.QAPractice.SingleUIElementsPages.PasswordPage;
+import com.practice.QAPractice.SingleUIElementsPages.PopUpPage;
 import com.practice.QAPractice.SingleUIElementsPages.SelectPage;
 import com.practice.QAPractice.SingleUIElementsPages.TextAreaPage;
 import com.practice.QAPractice.SingleUIElementsPages.TextInputPage;
@@ -803,6 +805,228 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		closeExtraTabsAndReturn(mainTab);
 		Assert.assertFalse(driver.getTitle().contains("404"),"Should not crash after frame-footer navigation");
+	}
+
+	@Test(priority = 42)
+	public void test_9_3_Iframe_MainFooterLinks() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.scrollToMainFooter();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isLinkPresent("Contact"), "Main footer should have 'Contact'");
+		Assert.assertTrue(page.isLinkPresent("What's new"), "Main footer should have 'What's new'");
+		Assert.assertTrue(page.isLinkPresent("www.qa-practice.com"), "Main footer should have the site link");
+		Assert.assertTrue(page.getLinkHref("Contact").contains("/contact"),
+				"'Contact' should point to the contact page");
+		Assert.assertTrue(page.getLinkHref("What's new").contains("whats_new"),
+				"'What's new' should point to the what's-new page");
+		String mainTab = driver.getWindowHandle();
+		page.clickMainContact();
+		Thread.sleep(500);
+		closeExtraTabsAndReturn(mainTab);
+		page.navigateTo();
+		Thread.sleep(500);
+		Assert.assertTrue(driver.getCurrentUrl().contains("iframe_page"),
+				"Should return to the main iframe page after visiting a footer link");
+	}
+
+	// ================================================================
+	// SECTION 10 — POP-UP
+	// ================================================================
+
+	// 10.1 Modal pop-up
+
+	@Test(priority = 43)
+	public void test_10_1_PopUp_LaunchButtonVisible() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToModal();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isLaunchButtonVisible(), "Launch button should be visible");
+		Assert.assertTrue(page.isLaunchButtonEnabled(), "Launch button should be enabled");
+	}
+
+	@Test(priority = 44)
+	public void test_10_1_PopUp_ModalOpens() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToModal();
+		Thread.sleep(500);
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Modal should be visible after launch");
+		Assert.assertEquals(page.getModalTitle(), "I am a Pop-Up", "Modal title should match");
+	}
+
+	@Test(priority = 45)
+	public void test_10_1_PopUp_CheckboxVisible() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToModal();
+		Thread.sleep(500);
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Modal should be visible");
+		Assert.assertTrue(page.isCheckboxVisible(), "Checkbox should be visible");
+		Assert.assertFalse(page.isCheckboxChecked(), "Checkbox should NOT be checked by default");
+	}
+
+	@Test(priority = 46)
+	public void test_10_1_PopUp_SendWithoutCheckbox() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToModal();
+		Thread.sleep(500);
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Modal should be visible");
+		page.clickSendButton();
+		Thread.sleep(500);
+		Assert.assertFalse(driver.getTitle().contains("404"), "Page should not crash after send");
+	}
+
+	@Test(priority = 47)
+	public void test_10_1_PopUp_SendWithCheckbox() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToModal();
+		Thread.sleep(500);
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Modal should be visible");
+		page.clickCheckbox();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isCheckboxChecked(), "Checkbox should now be checked");
+		page.clickSendButton();
+		Thread.sleep(500);
+		boolean resultOrAlive = page.isResultSectionVisible() || !driver.getTitle().contains("404");
+		Assert.assertTrue(resultOrAlive, "Result section should appear OR page should not crash");
+	}
+
+	@Test(priority = 48)
+	public void test_10_1_PopUp_CloseButton() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToModal();
+		Thread.sleep(500);
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Modal should be visible");
+		page.clickCloseButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalGone(), "Modal should no longer be visible after Close");
+	}
+
+	// 10.2 Iframe pop-up — IMPORTANT CASE: Check -> submit with EMPTY text
+
+	@Test(priority = 49)
+	public void test_10_2_PopUp_IframeSubmitEmptyText() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToIframePopup();
+		Thread.sleep(500);
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Iframe pop-up modal should open");
+		page.switchToPopupIframe();
+		Thread.sleep(500);
+		// Click "Check" (the primary footer button) to open the input form.
+		page.clickSendButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isPasteInputVisible(), "Input form should appear after Check");
+		// Leave the input EMPTY, then submit (primary button again).
+		page.enterPasteText("");
+		Thread.sleep(500);
+		page.clickSendButton();
+		Thread.sleep(500);
+		Assert.assertFalse(page.isCorrectResultShown(), "Empty text must NOT be accepted as 'Correct!'");
+		boolean rejected = page.isNopeResultShown() || page.isPasteInputVisible();
+		Assert.assertTrue(rejected, "Empty submit should show 'Nope...'/an error, or stay on the form");
+		page.switchToMainPage();
+	}
+
+	// ================================================================
+	// SECTION 11 — PRACTICE FORM  (one DataProvider, one test)
+	// ================================================================
+
+	@DataProvider(name = "practiceFormData")
+	public Object[][] practiceFormData() {
+		// Columns: firstName, lastName, email, gender, mobile, hobby, state, city, address, expected, description
+		return new Object[][] {
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", true,
+						"Valid data: all required fields filled correctly" },
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "Sports,Reading", "", "", "", true,
+						"Valid data: optional hobbies selected (Sports and Reading)" },
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "NCR", "Delhi", "", true,
+						"Valid data: state and city selected" },
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "123 Test Street, Test City", true,
+						"Valid data: current address filled" },
+				{ "", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", false,
+						"Invalid data: first name empty" },
+				{ "John", "", "john@test.com", "Male", "1234567890", "", "", "", "", false,
+						"Invalid data: last name empty" },
+				{ "John", "Doe", "john@test.com", "", "1234567890", "", "", "", "", false,
+						"Invalid data: no gender selected" },
+				{ "John", "Doe", "john@test.com", "Male", "", "", "", "", "", false,
+						"Invalid data: mobile empty" },
+				{ "John", "Doe", "john@test.com", "Male", "123", "", "", "", "", false,
+						"Invalid data: mobile less than 10 digits" },
+				{ "John", "Doe", "john@test.com", "Male", "12345678901", "", "", "", "", false,
+						"Invalid data: mobile more than 10 digits" },
+				{ "John", "Doe", "notanemail", "Male", "1234567890", "", "", "", "", false,
+						"Invalid data: wrong email format" }, };
+	}
+
+	@Test(dataProvider = "practiceFormData", priority = 50)
+	public void test_11_1_PracticeForm(String firstName, String lastName, String email, String gender, String mobile,
+			String hobby, String state, String city, String address, boolean expected, String description)
+			throws Exception {
+		PracticeFormPage page = new PracticeFormPage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		if (!firstName.isEmpty()) {
+			page.enterFirstName(firstName);
+			Thread.sleep(500);
+		}
+		if (!lastName.isEmpty()) {
+			page.enterLastName(lastName);
+			Thread.sleep(500);
+		}
+		if (!email.isEmpty()) {
+			page.enterEmail(email);
+			Thread.sleep(500);
+		}
+		if (!gender.isEmpty()) {
+			page.selectGender(gender);
+			Thread.sleep(500);
+		}
+		if (!mobile.isEmpty()) {
+			page.enterMobile(mobile);
+			Thread.sleep(500);
+		}
+		if (!hobby.isEmpty()) {
+			for (String h : hobby.split(",")) {
+				page.selectHobby(h.trim());
+				Thread.sleep(500);
+			}
+		}
+		if (!state.isEmpty()) {
+			page.selectState(state);
+			Thread.sleep(500);
+		}
+		if (!city.isEmpty()) {
+			page.selectCity(city);
+			Thread.sleep(500);
+		}
+		if (!address.isEmpty()) {
+			page.enterCurrentAddress(address);
+			Thread.sleep(500);
+		}
+		page.submitForm();
+		Thread.sleep(500);
+		if (expected) {
+			Assert.assertTrue(page.isResultModalVisible(), description);
+			Assert.assertEquals(page.getResultModalTitle(), "Thanks for submitting the form", description);
+			page.closeResultModal();
+			Thread.sleep(500);
+			Assert.assertTrue(page.isResultModalGone(), description);
+		} else {
+			Assert.assertFalse(page.isResultModalVisible(), description);
+		}
 	}
 
 	private void closeExtraTabsAndReturn(String mainTab) {
