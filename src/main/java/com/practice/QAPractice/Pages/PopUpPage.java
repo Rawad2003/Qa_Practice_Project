@@ -133,4 +133,19 @@ public class PopUpPage extends BasePage {
 	public String getTextToCopy() {
 		return driver.findElement(textCopy).getText();
 	}
+
+	// input form (appears after clicking Check b0utton)
+	public boolean isPasteInputVisible() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		try {
+			return wait.until(ExpectedConditions.visibilityOfElementLocated(pasteTextInput)).isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public void enterPasteText(String text) {
+		driver.findElement(pasteTextInput).clear();
+		driver.findElement(pasteTextInput).sendKeys(text);
+	}
 }
