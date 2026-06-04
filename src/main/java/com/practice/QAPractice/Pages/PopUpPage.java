@@ -56,7 +56,7 @@ public class PopUpPage extends BasePage {
 		driver.findElement(launchButton).click();
 	}
 
-	// Modal Methods:
+	// Modal Methods (CheckBox, Send Button, Close Button):
 	public boolean isModalVisible() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		try {
@@ -64,6 +64,43 @@ public class PopUpPage extends BasePage {
 			return driver.findElement(modal).isDisplayed();
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	public String getModalTitle() {
+		return driver.findElement(modalTitle).getText();
+	}
+
+	public boolean isCheckboxVisible() {
+		return driver.findElement(checkBox).isDisplayed();
+	}
+
+	public boolean isCheckboxChecked() {
+		return driver.findElement(checkBox).isSelected();
+	}
+
+	public void clickCheckbox() {
+		driver.findElement(checkBox).click();
+	}
+
+	public void clickSendButton() {
+		driver.findElement(sendButton).click();
+	}
+
+	public void clickCloseButton() {
+		driver.findElement(closeButton).click();
+	}
+
+	public boolean isResultSectionVisible() {
+		return driver.findElements(resultSection).size() > 0;
+	}
+
+	public boolean isModalGone() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		try {
+			return wait.until(ExpectedConditions.invisibilityOfElementLocated(modalShown));
+		} catch (Exception e) {
+			return driver.findElements(modalShown).size() == 0;
 		}
 	}
 }
