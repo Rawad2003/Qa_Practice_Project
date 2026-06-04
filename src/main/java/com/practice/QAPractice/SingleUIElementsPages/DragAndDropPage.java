@@ -13,7 +13,8 @@ public class DragAndDropPage extends BasePage {
 
 	private final By boxDropAbleBox = By.cssSelector("#rect-droppable");
 	private final By boxDragAbleBox = By.cssSelector("#rect-draggable");
-	private final By dropAbleText = By.cssSelector("#text-droppable");
+	private final By boxDropAbleText = By.cssSelector("#text-droppable");
+	private final By imageDropAbleText = By.xpath("//p[@class='text-droppable' and text()='Dropped!']");
 	private final By imageDropAbleBox = By.cssSelector("#rect-droppable2");
 	private final By imageDragAbleBox = By.cssSelector("#rect-droppable1");
 
@@ -57,20 +58,24 @@ public class DragAndDropPage extends BasePage {
 		new Actions(driver).clickAndHold(source).moveToElement(target).moveByOffset(1, 1).release().perform();
 	}
 
-	public String getDropAbleText() {
-		return driver.findElement(dropAbleText).getText();
+	public String getBoxDropAbleText() {
+		return driver.findElement(boxDropAbleText).getText();
+	}
+
+	public String getImageDropAbleText() {
+		return driver.findElement(imageDropAbleText).getText();
 	}
 
 	public boolean isBoxDragTextDropped() {
-		return getDropAbleText().contains("Dropped!");
+		return getBoxDropAbleText().contains("Dropped!");
 	}
 
 	public boolean isBoxDropHereTextVisible() {
-		return getDropAbleText().contains("Drop here");
+		return getBoxDropAbleText().contains("Drop here");
 	}
 
 	public boolean isImageDragTextDropped() {
-		return getDropAbleText().contains("Dropped!");
+		return getImageDropAbleText().contains("Dropped!");
 	}
 
 }
