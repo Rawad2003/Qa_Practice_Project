@@ -164,4 +164,8 @@ public class PracticeFormPage extends BasePage {
 			return false;
 		}
 	}
+
+	public String getResultModalTitle() {
+		return driver.findElement(resultModalTitle).getText();
+	}
 }
