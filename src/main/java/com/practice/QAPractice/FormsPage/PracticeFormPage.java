@@ -183,4 +183,12 @@ public class PracticeFormPage extends BasePage {
 
 		}
 	}
+
+	public boolean isFieldRequired(String fieldId) {
+		WebElement field = driver.findElement(By.id(fieldId));
+		Object valid = ((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();", field);
+		boolean hasRequiredAttr = field.getAttribute("required") != null;
+		boolean isInvalid = (valid instanceof Boolean) && !((Boolean) valid);
+		return hasRequiredAttr || isInvalid;
+	}
 }
