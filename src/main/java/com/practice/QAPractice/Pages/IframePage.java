@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -212,5 +213,17 @@ public class IframePage extends BasePage {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	// Scroll-position read
+	// ExpectedConditions cannot read a scroll offset
+	// JS is the only reliable way to verify the scroll-to-top buttons
+	public long getScrollY() {
+		Object value = ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
+		return ((Number) value).longValue();
+	}
+
+	public boolean isAtTop() {
+		return getScrollY() <= 5;
 	}
 }
