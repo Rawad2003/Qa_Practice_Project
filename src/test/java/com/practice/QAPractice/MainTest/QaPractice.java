@@ -648,4 +648,30 @@ public class QaPractice extends BaseSetupManager {
 		page.clickFacebook();
 		Assert.assertTrue(page.waitForUrlContains("facebook"), "Facebook link should navigate to Twitter");
 	}
+
+	@Test(priority = 33)
+	public void test_9_2_Iframe_EmailLink() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		page.openMenu();
+		Thread.sleep(500);
+		page.clickEmail();
+		Assert.assertTrue(page.waitForUrlContains("mail"), "Email link should navigate to Twitter");
+	}
+
+	@Test(priority = 34)
+	public void test_9_2_Iframe_AlbumLink() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		page.openMenu();
+		Thread.sleep(500);
+		page.clickAlbum();
+		Assert.assertTrue(page.waitForUrlContains("album"), "Album link should navigate to Twitter");
+	}
 }
