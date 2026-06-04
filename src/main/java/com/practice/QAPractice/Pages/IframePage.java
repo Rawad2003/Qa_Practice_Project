@@ -58,7 +58,7 @@ public class IframePage extends BasePage {
 	}
 
 	public int getIframeCount() {
-		return driver.findElements(iframe).size();
+		return driver.findElements(anyIframe).size();
 	}
 
 	public void switchToIframe() {
