@@ -69,4 +69,12 @@ public class IframePage extends BasePage {
 		new WebDriverWait(driver, Duration.ofSeconds(10))
 				.until(ExpectedConditions.visibilityOfElementLocated(navbarMenu));
 	}
+
+	public boolean isMenuOpen() {
+		try {
+			return driver.findElement(navbarMenu).isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
