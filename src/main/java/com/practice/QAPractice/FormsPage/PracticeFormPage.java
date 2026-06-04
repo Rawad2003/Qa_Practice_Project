@@ -148,4 +148,9 @@ public class PracticeFormPage extends BasePage {
 		new Actions(driver).scrollToElement(element).perform();
 		element.click();
 	}
+
+	// submit button method:
+	public void submitForm() {
+		scrollToAndClick(submitButton);
+	}
 }
