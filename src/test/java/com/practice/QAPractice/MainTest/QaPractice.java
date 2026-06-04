@@ -761,4 +761,31 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertTrue(page.isAtTop(),
 				"'Secondary action' should scroll the iframe to the top when the menu is CLOSED");
 	}
+
+	@Test(priority = 40)
+	public void test_9_2_Iframe_BackToTop() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		String mainTab = driver.getWindowHandle();
+		page.switchToIframe();
+		Thread.sleep(500);
+		page.clickBackToTop();
+		Thread.sleep(500);
+		if (driver.getWindowHandles().size() > 1) {
+			closeExtraTabsAndReturn(mainTab);
+			page.switchToIframe();
+		}
+		Assert.assertTrue(page.isAtTop(), "'Back to top' should scroll the iframe to the top");
+	}
+
+	private void closeExtraTabsAndReturn(String mainTab) {
+		for (String handle : driver.getWindowHandles()) {
+			if (!handle.equals(mainTab)) {
+				driver.switchTo().window(handle);
+				driver.close();
+			}
+		}
+		driver.switchTo().window(mainTab);
+	}
 }
