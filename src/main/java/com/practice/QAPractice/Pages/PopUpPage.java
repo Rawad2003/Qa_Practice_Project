@@ -3,6 +3,7 @@ package com.practice.QAPractice.Pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -102,5 +103,25 @@ public class PopUpPage extends BasePage {
 		} catch (Exception e) {
 			return driver.findElements(modalShown).size() == 0;
 		}
+	}
+
+	// iframe inside the modal
+	// buttons are reused, same cssSelector as the modal tab
+	// (Cancel, Check) here are same in the modal tab (Cancel, Send)
+	public boolean isPopupIframePresent() {
+		return driver.findElements(popupIframe).size() > 0;
+	}
+
+	public void switchToPopupIframe() {
+		new WebDriverWait(driver, Duration.ofSeconds(10))
+				.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(popupIframe));
+	}
+
+	public void switchToMainPage() {
+		driver.switchTo().defaultContent();
+	}
+
+	public String getPopupIframeTitle() {
+		return (String) ((JavascriptExecutor) driver).executeScript("return document.title;");
 	}
 }
