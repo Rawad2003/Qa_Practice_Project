@@ -172,4 +172,25 @@ public class IframePage extends BasePage {
 	public void clickGettingStartedGuide() {
 		driver.findElement(gettingStartedGuideLink).click();
 	}
+
+	// (B) Main page footer - call on default content (NOT in iframe)
+	public void scrollToMainFooter() {
+		customScrollToElement(footer);
+	}
+
+	public int getMainFooterLinkCount() {
+		return driver.findElements(footerLinks).size();
+	}
+
+	public void clickMainContact() {
+		driver.findElement(mainContactLink).click();
+	}
+
+	public void clickMainWhatsNew() {
+		driver.findElement(mainWhatsNewLink).click();
+	}
+
+	public void clickMainSiteLink() {
+		driver.findElement(mainSiteLink).click();
+	}
 }
