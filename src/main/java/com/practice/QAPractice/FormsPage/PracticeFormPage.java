@@ -168,4 +168,9 @@ public class PracticeFormPage extends BasePage {
 	public String getResultModalTitle() {
 		return driver.findElement(resultModalTitle).getText();
 	}
+
+	public void closeResultModal() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(closeResultModalButton)).click();
+	}
 }
