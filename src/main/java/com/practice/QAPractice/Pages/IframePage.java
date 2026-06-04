@@ -30,4 +30,32 @@ public class IframePage extends BasePage {
 		super(driver);
 	}
 
+	public void navigateTo() {
+		driver.get(IFRAMES_URL);
+	}
+
+	public boolean isIframePresent() {
+		return driver.findElements(iframe).size() > 0;
+	}
+
+	public int getIframeCount() {
+		return driver.findElements(iframe).size();
+	}
+
+	public void switchToIframe() {
+		driver.switchTo().frame(0);
+	}
+
+	public void switchToMainContent() {
+		driver.switchTo().defaultContent();
+	}
+
+	public String getIframeSrc() {
+		return driver.findElement(iframe).getAttribute("src");
+	}
+
+	public boolean isIframeDisplayed() {
+		return driver.findElement(iframe).isDisplayed();
+	}
+
 }
