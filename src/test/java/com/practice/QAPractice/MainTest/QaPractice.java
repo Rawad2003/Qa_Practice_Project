@@ -728,7 +728,7 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertTrue(page.isAtTop(), "'Main call to action' should scroll the iframe to the top");
 	}
 
-	@Test(priority = 37)
+	@Test(priority = 38)
 	public void test_9_2_Iframe_SecondaryCallToActionScrollsTop() throws Exception {
 		IframePage page = new IframePage(driver);
 		page.navigateTo();
@@ -740,6 +740,6 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertFalse(page.isAtTop(), "Preconditions: page should be scrolled down before clicking");
 		page.clickSecondaryAction();
 		Thread.sleep(500);
-		Assert.assertTrue(page.isAtTop(), "'Main call to action' should scroll the iframe to the top");
+		Assert.assertTrue(page.isAtTop(), "'Secondary action' should scroll the iframe to the top");
 	}
 }
