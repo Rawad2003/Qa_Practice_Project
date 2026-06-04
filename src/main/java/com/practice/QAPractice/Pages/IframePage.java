@@ -193,4 +193,14 @@ public class IframePage extends BasePage {
 	public void clickMainSiteLink() {
 		driver.findElement(mainSiteLink).click();
 	}
+
+	// Shared: read a link's href by its visible text
+	// (works in either footer depending on the current frame context)
+	public String getLinkHref(String linkText) {
+		return driver.findElement(By.linkText(linkText)).getAttribute("href");
+	}
+
+	public boolean isLinkPresent(String linkText) {
+		return driver.findElements(By.linkText(linkText)).size() > 0;
+	}
 }
