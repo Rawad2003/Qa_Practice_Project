@@ -145,4 +145,15 @@ public class IframePage extends BasePage {
 		new Actions(driver).scrollToElement(button).perform();
 		button.click();
 	}
+
+	// shared method to (A) and (B):
+	public void customScrollToElement(By locator) {
+		WebElement element = driver.findElement(locator);
+		new Actions(driver).scrollToElement(element).perform();
+	}
+
+	// (A) Frame footer - call After switchToIframe()
+	public void scrollToFrameFooter() {
+		customScrollToElement(footer);
+	}
 }
