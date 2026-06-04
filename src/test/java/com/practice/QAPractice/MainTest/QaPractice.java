@@ -622,4 +622,17 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertTrue(page.isMenuOpen(), "Menu should open after clicking the toggler");
 		Assert.assertFalse(page.getAboutText().trim().isEmpty(), "About paragraph should not be empty");
 	}
+
+	@Test(priority = 30)
+	public void test_9_2_Iframe_TwitterLink() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		page.openMenu();
+		Thread.sleep(500);
+		page.clickTwitter();
+		Assert.assertTrue(page.waitForUrlContains("twitter"), "Twitter link should navigate to Twitter");
+	}
 }
