@@ -29,8 +29,8 @@ public class IframePage extends BasePage {
 	private final By mainCallToActionButton = By.linkText("Main call to action");
 	private final By secondaryActionButton = By.linkText("Secondary action");
 	// buttons in the sub-frames:
-	private final By viewButton = By.xpath("//button[normalize-space()='View']");
-	private final By editButton = By.xpath("//button[normalize-space()='Edit']");
+	private final By viewButtons = By.xpath("//button[normalize-space()='View']");
+	private final By editButtons = By.xpath("//button[normalize-space()='Edit']");
 
 	private final By footer = By.cssSelector("footer");
 	private final By footerLinks = By.cssSelector("footer a");
@@ -124,15 +124,23 @@ public class IframePage extends BasePage {
 	}
 
 	// Album card buttons (All Cards)
+	public int getViewCount() {
+		return driver.findElements(viewButtons).size();
+	}
+
+	public int getEditCount() {
+		return driver.findElements(editButtons).size();
+	}
+
 	public void scrollToAndClickView(int index) {
-		List<WebElement> buttons = driver.findElements(viewButton);
+		List<WebElement> buttons = driver.findElements(viewButtons);
 		WebElement button = buttons.get(index);
 		new Actions(driver).scrollToElement(button).perform();
 		button.click();
 	}
 
 	public void scrollToAndClickEdit(int index) {
-		List<WebElement> buttons = driver.findElements(editButton);
+		List<WebElement> buttons = driver.findElements(editButtons);
 		WebElement button = buttons.get(index);
 		new Actions(driver).scrollToElement(button).perform();
 		button.click();
