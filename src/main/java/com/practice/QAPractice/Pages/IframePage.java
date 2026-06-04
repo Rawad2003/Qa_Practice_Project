@@ -1,10 +1,12 @@
 package com.practice.QAPractice.Pages;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,6 +17,7 @@ public class IframePage extends BasePage {
 
 	private final By iframe = By.cssSelector("iframe[class='embed-responsive-item']");
 	private final By anyIframe = By.tagName("iframe");
+	// links of the navBarToggler:
 	private final By navbarToggler = By.cssSelector(".navbar-toggler");
 	private final By navbarMenu = By.id("navbarHeader");
 	private final By aboutParagraph = By.cssSelector("#navbarHeader h4 + p, #navbarHeader p.text-muted");
@@ -22,14 +25,23 @@ public class IframePage extends BasePage {
 	private final By facebookLink = By.linkText("Like on Facebook");
 	private final By emailLink = By.linkText("Email me");
 	private final By albumBrand = By.cssSelector("a.navbar-brand");
+	// buttons in the main frame:
 	private final By mainCallToActionButton = By.linkText("Main call to action");
 	private final By secondaryActionButton = By.linkText("Secondary action");
-	private final By firstViewButton = By.xpath("(//button[normalize-space()='View'])[1]");
-	private final By firstEditButton = By.xpath("(//button[normalize-space()='Edit'])[1]");
+	// buttons in the sub-frames:
+	private final By viewButton = By.xpath("//button[normalize-space()='View']");
+	private final By editButton = By.xpath("//button[normalize-space()='Edit']");
+
+	private final By footer = By.cssSelector("footer");
+	private final By footerLinks = By.cssSelector("footer a");
+	// Frame footer links
 	private final By backToTopLink = By.linkText("Back to top");
 	private final By visitTheHomePageLink = By.linkText("Visit the homepage");
 	private final By gettingStartedGuideLink = By.linkText("getting started guide");
-	private final By footer = By.cssSelector("footer");
+	// Main footer links
+	private final By mainContactLink = By.linkText("Contact");
+	private final By mainWhatsNewLink = By.linkText("What's new");
+	private final By mainSiteLink = By.linkText("www.qa-practice.com");
 
 	// Basic iframe helpers
 	public IframePage(WebDriver driver) {
@@ -100,5 +112,29 @@ public class IframePage extends BasePage {
 
 	public void clickAlbum() {
 		driver.findElement(albumBrand).click();
+	}
+
+	// Header call-to-action links
+	public void clickMainCallToAction() {
+		driver.findElement(mainCallToActionButton).click();
+	}
+
+	public void clickSecondaryAction() {
+		driver.findElement(secondaryActionButton).click();
+	}
+
+	// Album card buttons (All Cards)
+	public void scrollToAndClickView(int index) {
+		List<WebElement> buttons = driver.findElements(viewButton);
+		WebElement button = buttons.get(index);
+		new Actions(driver).scrollToElement(button).perform();
+		button.click();
+	}
+
+	public void scrollToAndClickEdit(int index) {
+		List<WebElement> buttons = driver.findElements(editButton);
+		WebElement button = buttons.get(index);
+		new Actions(driver).scrollToElement(button).perform();
+		button.click();
 	}
 }
