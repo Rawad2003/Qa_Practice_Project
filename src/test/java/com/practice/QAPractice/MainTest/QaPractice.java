@@ -502,13 +502,13 @@ public class QaPractice extends BaseSetupManager {
 	}
 
 	@Test(priority = 20)
-	public void test_8_1_DragAndDrop_PerformDrag() throws Exception {
+	public void test_8_1_DragAndDrop_BoxPerformDrag() throws Exception {
 		DragAndDropPage page = new DragAndDropPage(driver);
 		page.navigateToBoxes();
 		Thread.sleep(500);
 		page.boxDragAndDrop();
 		Thread.sleep(500);
-		Assert.assertTrue(page.isBoxDragTextDropped(), "Text should change to 'Dropped!' after drag");
+		Assert.assertTrue(page.isBoxDragTextDropped(), "Text should change to 'Dropped!' after box drag");
 	}
 
 	@Test(priority = 21)
@@ -523,5 +523,35 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		Assert.assertTrue(page.isBoxDragTextDropped(), "Text should still be 'Dropped!' after second drag");
 		Assert.assertFalse(driver.getTitle().contains("404"), "Page should not crash after second drag");
+	}
+
+	// 8.2 Images tab
+
+	@Test(priority = 22)
+	public void test_8_2_DragAndDrop_ImagePageLoads() throws Exception {
+		DragAndDropPage page = new DragAndDropPage(driver);
+		page.navigateToImages();
+		Thread.sleep(500);
+		Assert.assertFalse(driver.getTitle().contains("404"), "Images page should not return 404");
+		Assert.assertFalse(driver.getTitle().isEmpty(), "Images page should load successfullt");
+	}
+
+	@Test(priority = 23)
+	public void test_8_2_DragAndDrop_ImageVisible() throws Exception {
+		DragAndDropPage page = new DragAndDropPage(driver);
+		page.navigateToImages();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isImageDragAbleVisible(), "Image Draggable square should be visible");
+		Assert.assertTrue(page.isImageDropAbleVisible(), "Image Droppable square should be visible");
+	}
+
+	@Test(priority = 24)
+	public void test_8_2_DragAndDrop_ImagePerformDrag() throws Exception {
+		DragAndDropPage page = new DragAndDropPage(driver);
+		page.navigateToImages();
+		Thread.sleep(500);
+		page.imageDragAndDrop();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isImageDragTextDropped(), "Text should change to 'Dropped!' after image drag");
 	}
 }
