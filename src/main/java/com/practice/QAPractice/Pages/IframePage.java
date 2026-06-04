@@ -1,7 +1,11 @@
 package com.practice.QAPractice.Pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.practice.QAPractice.BasePage.BasePage;
 
@@ -26,6 +30,7 @@ public class IframePage extends BasePage {
 	private final By gettingStartedGuideLink = By.linkText("getting started guide");
 	private final By footer = By.cssSelector("footer");
 
+	// Basic iframe helpers
 	public IframePage(WebDriver driver) {
 		super(driver);
 	}
@@ -58,4 +63,10 @@ public class IframePage extends BasePage {
 		return driver.findElement(iframe).isDisplayed();
 	}
 
+	// Menu (Bootsrap navbar collapse)
+	public void openMenu() {
+		driver.findElement(navbarToggler).click();
+		new WebDriverWait(driver, Duration.ofSeconds(10))
+				.until(ExpectedConditions.visibilityOfElementLocated(navbarMenu));
+	}
 }
