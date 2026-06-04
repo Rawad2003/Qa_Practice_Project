@@ -9,6 +9,7 @@ import com.practice.QAPractice.BasePage.BaseSetupManager;
 import com.practice.QAPractice.SingleUIElementsPages.AlertPage;
 import com.practice.QAPractice.SingleUIElementsPages.ButtonPage;
 import com.practice.QAPractice.SingleUIElementsPages.CheckboxPage;
+import com.practice.QAPractice.SingleUIElementsPages.DragAndDropPage;
 import com.practice.QAPractice.SingleUIElementsPages.EmailPage;
 import com.practice.QAPractice.SingleUIElementsPages.NewTabPage;
 import com.practice.QAPractice.SingleUIElementsPages.PasswordPage;
@@ -487,4 +488,17 @@ public class QaPractice extends BaseSetupManager {
 					"Expected SUCESS for prompt but none found. Input: " + input);
 		}
 	}
+
+	// 8.1 Boxes tab
+
+	@Test(priority = 19)
+	public void test_8_1_DragAndDrop_BoxesVisible() throws Exception {
+		DragAndDropPage page = new DragAndDropPage(driver);
+		page.navigateToBoxes();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isBoxDragAbleVisible(), "Draggable box should be visible");
+		Assert.assertTrue(page.isBoxDropAbleVisible(), "Droppable box should be visible");
+		Assert.assertTrue(page.isBoxDropHereTextVisible(), "Initial text should be 'Drop here'");
+	}
+
 }
