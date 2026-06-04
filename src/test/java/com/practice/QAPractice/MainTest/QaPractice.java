@@ -779,6 +779,31 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertTrue(page.isAtTop(), "'Back to top' should scroll the iframe to the top");
 	}
 
+	// 9.3 Footer link coverage (two footers: frame + main page footer)
+
+	@Test(priority = 41)
+	public void test_9_3_Iframe_FrameFooterLinks() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		page.scrollToFrameFooter();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isLinkPresent("Back to top"), "Frame footer should have 'Back to top'");
+		Assert.assertTrue(page.isLinkPresent("Visit the homepage"), "Frame footer should have 'Visit the homepage'");
+		Assert.assertTrue(page.isLinkPresent("getting started guide"),
+				"Frame footer should have 'getting started guide'");
+		Assert.assertTrue(page.getLinkHref("Visit the homepage").endsWith("/"),
+				"'Visit the homepage' should point to the site root");
+		Assert.assertTrue(page.getLinkHref("getting started guide").endsWith("/"),
+				"'getting started guide' should point to the getting started guide");
+		String mainTab = driver.getWindowHandle();
+		page.clickVisitHomepage();
+		Thread.sleep(500);
+		closeExtraTabsAndReturn(mainTab);
+	}
+
 	private void closeExtraTabsAndReturn(String mainTab) {
 		for (String handle : driver.getWindowHandles()) {
 			if (!handle.equals(mainTab)) {
