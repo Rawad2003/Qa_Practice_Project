@@ -203,4 +203,14 @@ public class IframePage extends BasePage {
 	public boolean isLinkPresent(String linkText) {
 		return driver.findElements(By.linkText(linkText)).size() > 0;
 	}
+
+	// Explicit-wait URL check:
+	public boolean waitForUrlContains(String expected) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		try {
+			return wait.until(ExpectedConditions.urlContains(expected));
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
