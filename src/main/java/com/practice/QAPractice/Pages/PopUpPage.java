@@ -1,8 +1,12 @@
 package com.practice.QAPractice.Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-public class PopUpPage {
+import com.practice.QAPractice.BasePage.BasePage;
+
+public class PopUpPage extends BasePage {
+
 	private static final String URL_MODAL = "https://www.qa-practice.com/elements/popup/modal";
 	private static final String IFRAME_POPUP = "https://www.qa-practice.com/elements/popup/iframe_popup";
 
@@ -19,4 +23,16 @@ public class PopUpPage {
 	private final By popupIframe = By.cssSelector("#exampleModal iframe");
 	private final By correctResult = By.xpath("//*[contains(@role,'alert') and contains(text(),'Correct')]");
 	private final By nopeResult = By.xpath("//*[contains(@role,'alert') and contains(text(),'Nope')]");
+
+	public PopUpPage(WebDriver driver) {
+		super(driver);
+	}
+
+	public void navigateToModal() {
+		driver.get(URL_MODAL);
+	}
+
+	public void navigateToIframePopup() {
+		driver.get(IFRAME_POPUP);
+	}
 }
