@@ -36,7 +36,7 @@ public class IframePage extends BasePage {
 	private final By footerLinks = By.cssSelector("footer a");
 	// Frame footer links
 	private final By backToTopLink = By.linkText("Back to top");
-	private final By visitTheHomePageLink = By.linkText("Visit the homepage");
+	private final By visitHomepageLink = By.linkText("Visit the homepage");
 	private final By gettingStartedGuideLink = By.linkText("getting started guide");
 	// Main footer links
 	private final By mainContactLink = By.linkText("Contact");
@@ -155,5 +155,21 @@ public class IframePage extends BasePage {
 	// (A) Frame footer - call After switchToIframe()
 	public void scrollToFrameFooter() {
 		customScrollToElement(footer);
+	}
+
+	public int getFrameFooterLinkCount() {
+		return driver.findElements(footerLinks).size();
+	}
+
+	public void clickBackToTop() {
+		driver.findElement(backToTopLink).click();
+	}
+
+	public void clickVisitHomepage() {
+		driver.findElement(visitHomepageLink).click();
+	}
+
+	public void clickGettingStartedGuide() {
+		driver.findElement(gettingStartedGuideLink).click();
 	}
 }
