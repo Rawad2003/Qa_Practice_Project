@@ -729,7 +729,7 @@ public class QaPractice extends BaseSetupManager {
 	}
 
 	@Test(priority = 38)
-	public void test_9_2_Iframe_SecondaryCallToActionScrollsTop() throws Exception {
+	public void test_9_2_Iframe_SecondaryCallToActionScrollsTop_MenuClosed() throws Exception {
 		IframePage page = new IframePage(driver);
 		page.navigateTo();
 		Thread.sleep(500);
@@ -740,6 +740,25 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertFalse(page.isAtTop(), "Preconditions: page should be scrolled down before clicking");
 		page.clickSecondaryAction();
 		Thread.sleep(500);
-		Assert.assertTrue(page.isAtTop(), "'Secondary action' should scroll the iframe to the top");
+		Assert.assertTrue(page.isAtTop(),
+				"'Secondary action' should scroll the iframe to the top when the menu is CLOSED");
+	}
+
+	@Test(priority = 39)
+	public void test_9_2_Iframe_SecondaryCallToActionScrollsTop_MenuOpened() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		page.openMenu();
+		Thread.sleep(500);
+		page.scrollToFrameFooter();
+		Thread.sleep(500);
+		Assert.assertFalse(page.isAtTop(), "Preconditions: page should be scrolled down before clicking");
+		page.clickSecondaryAction();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isAtTop(),
+				"'Secondary action' should scroll the iframe to the top when the menu is CLOSED");
 	}
 }

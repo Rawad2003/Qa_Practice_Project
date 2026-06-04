@@ -27,8 +27,8 @@ public class IframePage extends BasePage {
 	private final By emailLink = By.linkText("Email me");
 	private final By albumBrand = By.cssSelector("a.navbar-brand");
 	// buttons in the main frame:
-	private final By mainCallToActionButton = By.linkText("Main call to action");
-	private final By secondaryActionButton = By.linkText("Secondary action");
+	private final By mainCallToActionButton = By.cssSelector(".btn.btn-secondary.my-2");
+	private final By secondaryActionButton = By.cssSelector(".btn.btn-primary.my-2");
 	// buttons in the sub-frames:
 	private final By viewButtons = By.xpath("//button[normalize-space()='View']");
 	private final By editButtons = By.xpath("//button[normalize-space()='Edit']");
