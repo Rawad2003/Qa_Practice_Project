@@ -27,10 +27,11 @@ public class PopUpPage extends BasePage {
 	private final By resultSection = By.xpath("//p[contains(text(),'Selected checkboxes')]");
 	// Iframe Pop-Up Elements:
 	private final By textCopy = By.id("text-to-copy");
-	private final By pasteTextInput = By.xpath("//input[contains(@class,'textinput')]");
+	private final By pasteTextInput = By.id("id_text_from_iframe");
 	private final By popupIframe = By.cssSelector("#exampleModal iframe");
 	private final By correctResult = By.xpath("//*[contains(@role,'alert') and contains(text(),'Correct')]");
 	private final By nopeResult = By.xpath("//*[contains(@role,'alert') and contains(text(),'Nope')]");
+	private final By submitPasteText = By.cssSelector("#submit-id-submit");
 
 	public PopUpPage(WebDriver driver) {
 		super(driver);
@@ -156,5 +157,10 @@ public class PopUpPage extends BasePage {
 
 	public boolean isNopeResultShown() {
 		return driver.findElements(nopeResult).size() > 0;
+	}
+
+	// Submit Paste form:
+	public void submitPasteForm() {
+		driver.findElement(submitPasteText).click();
 	}
 }

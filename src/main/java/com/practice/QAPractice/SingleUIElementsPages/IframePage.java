@@ -27,8 +27,8 @@ public class IframePage extends BasePage {
 	private final By emailLink = By.linkText("Email me");
 	private final By albumBrand = By.cssSelector("a.navbar-brand");
 	// buttons in the main frame:
-	private final By mainCallToActionButton = By.cssSelector(".btn.btn-secondary.my-2");
-	private final By secondaryActionButton = By.cssSelector(".btn.btn-primary.my-2");
+	private final By mainCallToActionButton = By.cssSelector(".btn.btn-primary.my-2");
+	private final By secondaryActionButton = By.cssSelector(".btn.btn-secondary.my-2");
 	// buttons in the sub-frames:
 	private final By viewButtons = By.xpath("//button[normalize-space()='View']");
 	private final By editButtons = By.xpath("//button[normalize-space()='Edit']");
@@ -117,11 +117,14 @@ public class IframePage extends BasePage {
 
 	// Header call-to-action links
 	public void clickMainCallToAction() {
-		driver.findElement(mainCallToActionButton).click();
+		// JS click: the button is off-screen after scrolling down, so a native click is intercepted
+		WebElement el = driver.findElement(mainCallToActionButton);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
 	public void clickSecondaryAction() {
-		driver.findElement(secondaryActionButton).click();
+		WebElement el = driver.findElement(secondaryActionButton);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
 	// Album card buttons (All Cards)
@@ -163,7 +166,8 @@ public class IframePage extends BasePage {
 	}
 
 	public void clickBackToTop() {
-		driver.findElement(backToTopLink).click();
+		WebElement el = driver.findElement(backToTopLink);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
 	public void clickVisitHomepage() {

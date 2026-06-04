@@ -648,7 +648,7 @@ public class QaPractice extends BaseSetupManager {
 		page.openMenu();
 		Thread.sleep(500);
 		page.clickFacebook();
-		Assert.assertTrue(page.waitForUrlContains("facebook"), "Facebook link should navigate to Twitter");
+		Assert.assertTrue(page.waitForUrlContains("facebook"), "Facebook link should navigate to Facebook");
 	}
 
 	@Test(priority = 33)
@@ -661,7 +661,7 @@ public class QaPractice extends BaseSetupManager {
 		page.openMenu();
 		Thread.sleep(500);
 		page.clickEmail();
-		Assert.assertTrue(page.waitForUrlContains("mail"), "Email link should navigate to Twitter");
+		Assert.assertTrue(page.waitForUrlContains("mail"), "Email link should navigate to an email page");
 	}
 
 	@Test(priority = 34)
@@ -674,7 +674,7 @@ public class QaPractice extends BaseSetupManager {
 		page.openMenu();
 		Thread.sleep(500);
 		page.clickAlbum();
-		Assert.assertTrue(page.waitForUrlContains("album"), "Album link should navigate to Twitter");
+		Assert.assertTrue(page.waitForUrlContains("album"), "Album link should navigate to an album page");
 	}
 
 	@Test(priority = 35)
@@ -704,15 +704,15 @@ public class QaPractice extends BaseSetupManager {
 		page.switchToIframe();
 		Thread.sleep(500);
 		int count = page.getEditCount();
-		Assert.assertTrue(count > 0, "There should be at least one 'View' button in the album");
+		Assert.assertTrue(count > 0, "There should be at least one 'Edit' button in the album");
 		boolean allNavigated = true;
 		for (int i = 0; i < count; i++) {
 			page.scrollToAndClickEdit(i);
 			Thread.sleep(500);
-			if (!page.waitForUrlContains("view"))
+			if (!page.waitForUrlContains("edit"))
 				allNavigated = false;
 		}
-		Assert.assertTrue(allNavigated, "Every 'Edit' button should perform a view action");
+		Assert.assertTrue(allNavigated, "Every 'Edit' button should perform an edit action");
 	}
 
 	@Test(priority = 37)
@@ -915,58 +915,82 @@ public class QaPractice extends BaseSetupManager {
 		PopUpPage page = new PopUpPage(driver);
 		page.navigateToIframePopup();
 		Thread.sleep(500);
-		page.clickLaunchButton();
-		Thread.sleep(500);
-		Assert.assertTrue(page.isModalVisible(), "Iframe pop-up modal should open");
-		page.switchToPopupIframe();
-		Thread.sleep(500);
-		// Click "Check" (the primary footer button) to open the input form.
-		page.clickSendButton();
-		Thread.sleep(500);
-		Assert.assertTrue(page.isPasteInputVisible(), "Input form should appear after Check");
-		// Leave the input EMPTY, then submit (primary button again).
+		// The input form (text_from_iframe + Submit) is on the PARENT page, not in the iframe.
+		Assert.assertTrue(page.isPasteInputVisible(), "The input form should be present on the page");
 		page.enterPasteText("");
 		Thread.sleep(500);
-		page.clickSendButton();
+		page.submitPasteForm();
 		Thread.sleep(500);
 		Assert.assertFalse(page.isCorrectResultShown(), "Empty text must NOT be accepted as 'Correct!'");
 		boolean rejected = page.isNopeResultShown() || page.isPasteInputVisible();
-		Assert.assertTrue(rejected, "Empty submit should show 'Nope...'/an error, or stay on the form");
+		Assert.assertTrue(rejected, "Empty submit should be rejected (required field) or show 'Nope...'");
+	}
+
+	// 10.2 Iframe pop-up — happy path: copy the text, paste it, expect "Correct!"
+
+	@Test(priority = 50)
+	public void test_10_2_PopUp_IframeSubmitCorrectText() throws Exception {
+		PopUpPage page = new PopUpPage(driver);
+		page.navigateToIframePopup();
+		Thread.sleep(500);
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Iframe pop-up modal should open");
+		// Read the text to copy from INSIDE the iframe
+		page.switchToPopupIframe();
+		Thread.sleep(500);
+		String textToCopy = page.getTextToCopy();
 		page.switchToMainPage();
+		Thread.sleep(500);
+		// Close the modal so its backdrop doesn't intercept clicks on the parent form
+		page.clickCloseButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalGone(), "Modal should close before using the form");
+		// Paste the copied text into the parent form and submit
+		page.enterPasteText(textToCopy);
+		Thread.sleep(500);
+		page.submitPasteForm();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isCorrectResultShown(),
+				"Pasting the correct copied text should show the green 'Correct!' result");
 	}
 
 	@DataProvider(name = "practiceFormData")
 	public Object[][] practiceFormData() {
-		// Columns: firstName, lastName, email, gender, mobile, hobby, state, city,
+		// Columns: firstName, lastName, email, gender, mobile, dob, subjects, hobby, state, city,
 		// address, expected, description
 		return new Object[][] {
-				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", true,
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", "", "", true,
 						"Valid data: all required fields filled correctly" },
-				{ "John", "Doe", "john@test.com", "Male", "1234567890", "Sports,Reading", "", "", "", true,
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "Sports,Reading", "", "", "", true,
 						"Valid data: optional hobbies selected (Sports and Reading)" },
-				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "NCR", "Delhi", "", true,
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "NCR", "Delhi", "", true,
 						"Valid data: state and city selected" },
-				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "123 Test Street, Test City", true,
-						"Valid data: current address filled" },
-				{ "", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", false,
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", "", "123 Test Street, Test City",
+						true, "Valid data: current address filled" },
+				{ "John", "Doe", "john@test.com", "Male", "1234567890", "05 Jun 2026", "Maths",
+						"Sports,Reading,Music", "NCR", "Delhi", "123 Test Street, Test City", true,
+						"Valid data: all fields filled except picture" },
+				{ "", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", "", "", false,
 						"Invalid data: first name empty" },
-				{ "John", "", "john@test.com", "Male", "1234567890", "", "", "", "", false,
+				{ "John", "", "john@test.com", "Male", "1234567890", "", "", "", "", "", "", false,
 						"Invalid data: last name empty" },
-				{ "John", "Doe", "john@test.com", "", "1234567890", "", "", "", "", false,
+				{ "John", "Doe", "john@test.com", "", "1234567890", "", "", "", "", "", "", false,
 						"Invalid data: no gender selected" },
-				{ "John", "Doe", "john@test.com", "Male", "", "", "", "", "", false, "Invalid data: mobile empty" },
-				{ "John", "Doe", "john@test.com", "Male", "123", "", "", "", "", false,
+				{ "John", "Doe", "john@test.com", "Male", "", "", "", "", "", "", "", false,
+						"Invalid data: mobile empty" },
+				{ "John", "Doe", "john@test.com", "Male", "123", "", "", "", "", "", "", false,
 						"Invalid data: mobile less than 10 digits" },
-				{ "John", "Doe", "john@test.com", "Male", "12345678901", "", "", "", "", false,
+				{ "John", "Doe", "john@test.com", "Male", "12345678901", "", "", "", "", "", "", false,
 						"Invalid data: mobile more than 10 digits" },
-				{ "John", "Doe", "notanemail", "Male", "1234567890", "", "", "", "", false,
+				{ "John", "Doe", "notanemail", "Male", "1234567890", "", "", "", "", "", "", false,
 						"Invalid data: wrong email format" }, };
 	}
 
-	@Test(dataProvider = "practiceFormData", priority = 50)
+	@Test(dataProvider = "practiceFormData", priority = 51)
 	public void test_11_1_PracticeForm(String firstName, String lastName, String email, String gender, String mobile,
-			String hobby, String state, String city, String address, boolean expected, String description)
-			throws Exception {
+			String dob, String subjects, String hobby, String state, String city, String address, boolean expected,
+			String description) throws Exception {
 		PracticeFormPage page = new PracticeFormPage(driver);
 		page.navigateTo();
 		Thread.sleep(500);
@@ -988,6 +1012,14 @@ public class QaPractice extends BaseSetupManager {
 		}
 		if (!mobile.isEmpty()) {
 			page.enterMobile(mobile);
+			Thread.sleep(500);
+		}
+		if (!dob.isEmpty()) {
+			page.enterDateOfBirth(dob);
+			Thread.sleep(500);
+		}
+		if (!subjects.isEmpty()) {
+			page.enterSubject(subjects);
 			Thread.sleep(500);
 		}
 		if (!hobby.isEmpty()) {

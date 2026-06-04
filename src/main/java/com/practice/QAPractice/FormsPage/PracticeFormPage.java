@@ -120,7 +120,7 @@ public class PracticeFormPage extends BasePage {
 			scrollToAndClick(musicCheckbox);
 			break;
 		default:
-			throw new Exception("Invalid gender: " + hobby);
+			throw new Exception("Invalid hobby: " + hobby);
 		}
 	}
 
@@ -144,8 +144,12 @@ public class PracticeFormPage extends BasePage {
 
 	// Scroll and click element method(shared):
 	public void scrollToAndClick(By locator) {
+		// Hide the fixed ad-banner (#fixedban) that overlaps the form and intercepts clicks
+		((JavascriptExecutor) driver)
+				.executeScript("var b=document.getElementById('fixedban'); if(b){b.style.display='none';}");
 		WebElement element = driver.findElement(locator);
-		new Actions(driver).scrollToElement(element).perform();
+		Actions action = new Actions(driver);
+		action.scrollToElement(element).perform();
 		element.click();
 	}
 
@@ -179,7 +183,7 @@ public class PracticeFormPage extends BasePage {
 		try {
 			return wait.until(ExpectedConditions.invisibilityOfElementLocated(resultModal));
 		} catch (Exception e) {
-			return driver.findElements(By.cssSelector("#resultModal.show")).size() == 0;
+			return driver.findElements(By.cssSelector("#resultsModal.show")).size() == 0;
 
 		}
 	}
