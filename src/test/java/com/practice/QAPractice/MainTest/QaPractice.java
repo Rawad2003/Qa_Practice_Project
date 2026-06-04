@@ -510,4 +510,18 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		Assert.assertTrue(page.isBoxDragTextDropped(), "Text should change to 'Dropped!' after drag");
 	}
+
+	@Test(priority = 21)
+	public void test_8_1_DragAndDrop_CannotdragTwice() throws Exception {
+		DragAndDropPage page = new DragAndDropPage(driver);
+		page.navigateToBoxes();
+		Thread.sleep(500);
+		page.boxDragAndDrop();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isBoxDragTextDropped(), "First drag should show 'Dropped!'");
+		page.boxDragAndDrop();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isBoxDragTextDropped(), "Text should still be 'Dropped!' after second drag");
+		Assert.assertFalse(driver.getTitle().contains("404"), "Page should not crash after second drag");
+	}
 }
