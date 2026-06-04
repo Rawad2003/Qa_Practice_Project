@@ -11,6 +11,7 @@ import com.practice.QAPractice.SingleUIElementsPages.ButtonPage;
 import com.practice.QAPractice.SingleUIElementsPages.CheckboxPage;
 import com.practice.QAPractice.SingleUIElementsPages.DragAndDropPage;
 import com.practice.QAPractice.SingleUIElementsPages.EmailPage;
+import com.practice.QAPractice.SingleUIElementsPages.IframePage;
 import com.practice.QAPractice.SingleUIElementsPages.NewTabPage;
 import com.practice.QAPractice.SingleUIElementsPages.PasswordPage;
 import com.practice.QAPractice.SingleUIElementsPages.SelectPage;
@@ -553,5 +554,23 @@ public class QaPractice extends BaseSetupManager {
 		page.imageDragAndDrop();
 		Thread.sleep(500);
 		Assert.assertTrue(page.isImageDragTextDropped(), "Text should change to 'Dropped!' after image drag");
+	}
+
+	// 9.1 Basic iframe checks
+
+	@Test(priority = 25)
+	public void test_9_1_Iframe_IsPresent() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isIframePresent(), "Iframe should be present on page");
+	}
+
+	@Test(priority = 26)
+	public void test_9_1_Iframe_IsDisplayed() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isIframeDisplayed(), "Iframe should be displayed");
 	}
 }
