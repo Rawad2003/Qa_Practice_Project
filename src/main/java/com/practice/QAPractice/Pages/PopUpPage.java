@@ -124,4 +124,13 @@ public class PopUpPage extends BasePage {
 	public String getPopupIframeTitle() {
 		return (String) ((JavascriptExecutor) driver).executeScript("return document.title;");
 	}
+
+	// text to copy Methods:
+	public boolean isTextToCopyVisible() {
+		return driver.findElements(textCopy).size() > 0 && driver.findElement(textCopy).isDisplayed();
+	}
+
+	public String getTextToCopy() {
+		return driver.findElement(textCopy).getText();
+	}
 }
