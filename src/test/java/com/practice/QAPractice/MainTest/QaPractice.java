@@ -802,6 +802,7 @@ public class QaPractice extends BaseSetupManager {
 		page.clickVisitHomepage();
 		Thread.sleep(500);
 		closeExtraTabsAndReturn(mainTab);
+		Assert.assertFalse(driver.getTitle().contains("404"),"Should not crash after frame-footer navigation");
 	}
 
 	private void closeExtraTabsAndReturn(String mainTab) {
