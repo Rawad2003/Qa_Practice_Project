@@ -153,4 +153,15 @@ public class PracticeFormPage extends BasePage {
 	public void submitForm() {
 		scrollToAndClick(submitButton);
 	}
+
+	// Result methods:
+	public boolean isResultModalVisible() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(resultModal));
+			return driver.findElement(resultModal).isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
