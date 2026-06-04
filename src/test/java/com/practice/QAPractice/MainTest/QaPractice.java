@@ -592,7 +592,7 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertEquals(page.getIframeCount(), 1, "Exactly 1 iframe should exist on page");
 	}
 
-	@Test(priority = 28)
+	@Test(priority = 29)
 	public void test_9_1_Iframe_SwitchInAndOut() throws Exception {
 		IframePage page = new IframePage(driver);
 		page.navigateTo();
@@ -606,5 +606,20 @@ public class QaPractice extends BaseSetupManager {
 			Assert.fail("Switching in/out of iframe should not throw: " + e.getMessage());
 		}
 		Assert.assertFalse(driver.getTitle().contains("404"), "Driver should be back on main content");
+	}
+
+	// 9.2 Iframe functional test (inside the album)
+
+	@Test(priority = 30)
+	public void test_9_2_Iframe_MenuOpenWithAbout() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		page.switchToIframe();
+		Thread.sleep(500);
+		page.openMenu();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isMenuOpen(), "Menu should open after clicking the toggler");
+		Assert.assertFalse(page.getAboutText().trim().isEmpty(), "About paragraph should not be empty");
 	}
 }
