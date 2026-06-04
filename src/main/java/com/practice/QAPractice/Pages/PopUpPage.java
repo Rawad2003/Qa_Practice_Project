@@ -148,4 +148,13 @@ public class PopUpPage extends BasePage {
 		driver.findElement(pasteTextInput).clear();
 		driver.findElement(pasteTextInput).sendKeys(text);
 	}
+
+	// result
+	public boolean isCorrectResultShown() {
+		return driver.findElements(correctResult).size() > 0;
+	}
+
+	public boolean isNopeResultShown() {
+		return driver.findElements(nopeResult).size() > 0;
+	}
 }
