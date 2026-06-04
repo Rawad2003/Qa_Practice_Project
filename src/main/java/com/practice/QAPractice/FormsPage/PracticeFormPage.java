@@ -173,4 +173,14 @@ public class PracticeFormPage extends BasePage {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(closeResultModalButton)).click();
 	}
+
+	public boolean isResultModalGone() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		try {
+			return wait.until(ExpectedConditions.invisibilityOfElementLocated(resultModal));
+		} catch (Exception e) {
+			return driver.findElements(By.cssSelector("#resultModal.show")).size() == 0;
+
+		}
+	}
 }
