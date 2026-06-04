@@ -804,7 +804,7 @@ public class QaPractice extends BaseSetupManager {
 		page.clickVisitHomepage();
 		Thread.sleep(500);
 		closeExtraTabsAndReturn(mainTab);
-		Assert.assertFalse(driver.getTitle().contains("404"),"Should not crash after frame-footer navigation");
+		Assert.assertFalse(driver.getTitle().contains("404"), "Should not crash after frame-footer navigation");
 	}
 
 	@Test(priority = 42)
@@ -830,10 +830,6 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertTrue(driver.getCurrentUrl().contains("iframe_page"),
 				"Should return to the main iframe page after visiting a footer link");
 	}
-
-	// ================================================================
-	// SECTION 10 — POP-UP
-	// ================================================================
 
 	// 10.1 Modal pop-up
 
@@ -939,13 +935,10 @@ public class QaPractice extends BaseSetupManager {
 		page.switchToMainPage();
 	}
 
-	// ================================================================
-	// SECTION 11 — PRACTICE FORM  (one DataProvider, one test)
-	// ================================================================
-
 	@DataProvider(name = "practiceFormData")
 	public Object[][] practiceFormData() {
-		// Columns: firstName, lastName, email, gender, mobile, hobby, state, city, address, expected, description
+		// Columns: firstName, lastName, email, gender, mobile, hobby, state, city,
+		// address, expected, description
 		return new Object[][] {
 				{ "John", "Doe", "john@test.com", "Male", "1234567890", "", "", "", "", true,
 						"Valid data: all required fields filled correctly" },
@@ -961,8 +954,7 @@ public class QaPractice extends BaseSetupManager {
 						"Invalid data: last name empty" },
 				{ "John", "Doe", "john@test.com", "", "1234567890", "", "", "", "", false,
 						"Invalid data: no gender selected" },
-				{ "John", "Doe", "john@test.com", "Male", "", "", "", "", "", false,
-						"Invalid data: mobile empty" },
+				{ "John", "Doe", "john@test.com", "Male", "", "", "", "", "", false, "Invalid data: mobile empty" },
 				{ "John", "Doe", "john@test.com", "Male", "123", "", "", "", "", false,
 						"Invalid data: mobile less than 10 digits" },
 				{ "John", "Doe", "john@test.com", "Male", "12345678901", "", "", "", "", false,
