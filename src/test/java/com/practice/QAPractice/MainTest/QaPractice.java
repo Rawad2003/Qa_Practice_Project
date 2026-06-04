@@ -574,7 +574,7 @@ public class QaPractice extends BaseSetupManager {
 		Assert.assertTrue(page.isIframeDisplayed(), "Iframe should be displayed");
 	}
 
-	@Test(priority = 26)
+	@Test(priority = 27)
 	public void test_9_1_Iframe_HasSrc() throws Exception {
 		IframePage page = new IframePage(driver);
 		page.navigateTo();
@@ -582,5 +582,29 @@ public class QaPractice extends BaseSetupManager {
 		String src = page.getIframeSrc();
 		Assert.assertNotNull(src, "Iframe src should be not null");
 		Assert.assertFalse(src.trim().isEmpty(), "Iframe src should be notEmpty");
+	}
+
+	@Test(priority = 28)
+	public void test_9_1_Iframe_Count() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		Assert.assertEquals(page.getIframeCount(), 1, "Exactly 1 iframe should exist on page");
+	}
+
+	@Test(priority = 28)
+	public void test_9_1_Iframe_SwitchInAndOut() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		try {
+			page.switchToIframe();
+			Thread.sleep(500);
+			page.switchToMainContent();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			Assert.fail("Switching in/out of iframe should not throw: " + e.getMessage());
+		}
+		Assert.assertFalse(driver.getTitle().contains("404"), "Driver should be back on main content");
 	}
 }
