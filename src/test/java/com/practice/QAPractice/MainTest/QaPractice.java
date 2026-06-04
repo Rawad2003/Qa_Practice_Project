@@ -573,4 +573,14 @@ public class QaPractice extends BaseSetupManager {
 		Thread.sleep(500);
 		Assert.assertTrue(page.isIframeDisplayed(), "Iframe should be displayed");
 	}
+
+	@Test(priority = 26)
+	public void test_9_1_Iframe_HasSrc() throws Exception {
+		IframePage page = new IframePage(driver);
+		page.navigateTo();
+		Thread.sleep(500);
+		String src = page.getIframeSrc();
+		Assert.assertNotNull(src, "Iframe src should be not null");
+		Assert.assertFalse(src.trim().isEmpty(), "Iframe src should be notEmpty");
+	}
 }
