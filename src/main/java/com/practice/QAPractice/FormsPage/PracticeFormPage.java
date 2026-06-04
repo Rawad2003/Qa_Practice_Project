@@ -110,13 +110,13 @@ public class PracticeFormPage extends BasePage {
 
 	public void selectHobby(String hobby) throws Exception {
 		switch (hobby) {
-		case "Male":
+		case "Sports":
 			scrollToAndClick(sportsCheckbox);
 			break;
-		case "Female":
+		case "Reading":
 			scrollToAndClick(readingCheckbox);
 			break;
-		case "Other":
+		case "Music":
 			scrollToAndClick(musicCheckbox);
 			break;
 		default:
@@ -136,7 +136,7 @@ public class PracticeFormPage extends BasePage {
 	}
 
 	public void selectCity(String city) {
-		scrollToAndClick(stateControl);
+		scrollToAndClick(cityControl);
 		By option = By.cssSelector("#div_id_city .custom-dropdown-option[data-value='" + city + "']");
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(option)).click();
