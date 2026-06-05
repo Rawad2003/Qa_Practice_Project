@@ -1,4 +1,4 @@
-package com.practice.QAPractice.tests.popup;
+package com.practice.QAPractice.tests.singleui;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
