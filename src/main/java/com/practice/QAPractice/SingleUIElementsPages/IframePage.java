@@ -117,17 +117,15 @@ public class IframePage extends BasePage {
 
 	// Header call-to-action links
 	public void clickMainCallToAction() {
+		// JS click avoids interception (the button is under the fixed navbar when at top);
+		// href="#" still fires the scroll-to-top, which the test confirms via waitUntilAtTop().
 		WebElement el = driver.findElement(mainCallToActionButton);
-		// Bring it into view first: clicking an OFF-SCREEN href="#" link does not fire the
-		// scroll-to-top. With it in view, a native click follows href="#" -> scrolls to top.
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
-		el.click();
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
 	public void clickSecondaryAction() {
 		WebElement el = driver.findElement(secondaryActionButton);
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
-		el.click();
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
 	// Album card buttons (All Cards)
