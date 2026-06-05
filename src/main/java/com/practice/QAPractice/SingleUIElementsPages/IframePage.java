@@ -117,14 +117,17 @@ public class IframePage extends BasePage {
 
 	// Header call-to-action links
 	public void clickMainCallToAction() {
-		// JS click: the button is off-screen after scrolling down, so a native click is intercepted
 		WebElement el = driver.findElement(mainCallToActionButton);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+		// Bring it into view first: clicking an OFF-SCREEN href="#" link does not fire the
+		// scroll-to-top. With it in view, a native click follows href="#" -> scrolls to top.
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+		el.click();
 	}
 
 	public void clickSecondaryAction() {
 		WebElement el = driver.findElement(secondaryActionButton);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+		el.click();
 	}
 
 	// Album card buttons (All Cards)
@@ -229,5 +232,16 @@ public class IframePage extends BasePage {
 
 	public boolean isAtTop() {
 		return getScrollY() <= 5;
+	}
+
+	// Waits (polls) for the scroll to settle at the top — href="#" scroll-to-top can be
+	// animated (smooth scroll), so a single immediate read may catch it mid-scroll.
+	public boolean waitUntilAtTop() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		try {
+			return wait.until(d -> getScrollY() <= 5);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }
