@@ -915,8 +915,13 @@ public class QaPractice extends BaseSetupManager {
 		PopUpPage page = new PopUpPage(driver);
 		page.navigateToIframePopup();
 		Thread.sleep(500);
-		// The input form (text_from_iframe + Submit) is on the PARENT page, not in the iframe.
-		Assert.assertTrue(page.isPasteInputVisible(), "The input form should be present on the page");
+		page.clickLaunchButton();
+		Thread.sleep(500);
+		Assert.assertTrue(page.isModalVisible(), "Iframe pop-up modal should open");
+		// "Check" submits the empty form and reloads the page WITH the input form
+		page.clickSendButton();
+		Thread.sleep(1000);
+		Assert.assertTrue(page.isPasteInputVisible(), "Input form should appear after Check");
 		page.enterPasteText("");
 		Thread.sleep(500);
 		page.submitPasteForm();
@@ -936,17 +941,17 @@ public class QaPractice extends BaseSetupManager {
 		page.clickLaunchButton();
 		Thread.sleep(500);
 		Assert.assertTrue(page.isModalVisible(), "Iframe pop-up modal should open");
-		// Read the text to copy from INSIDE the iframe
+		// Read the text to copy from INSIDE the iframe (while the modal is open)
 		page.switchToPopupIframe();
 		Thread.sleep(500);
 		String textToCopy = page.getTextToCopy();
 		page.switchToMainPage();
 		Thread.sleep(500);
-		// Close the modal so its backdrop doesn't intercept clicks on the parent form
-		page.clickCloseButton();
-		Thread.sleep(500);
-		Assert.assertTrue(page.isModalGone(), "Modal should close before using the form");
-		// Paste the copied text into the parent form and submit
+		// "Check" submits the empty form and reloads the page WITH the input form
+		page.clickSendButton();
+		Thread.sleep(1000);
+		Assert.assertTrue(page.isPasteInputVisible(), "Input form should appear after Check");
+		// Paste the copied text into the form and submit
 		page.enterPasteText(textToCopy);
 		Thread.sleep(500);
 		page.submitPasteForm();
@@ -981,8 +986,8 @@ public class QaPractice extends BaseSetupManager {
 						"Invalid data: mobile empty" },
 				{ "John", "Doe", "john@test.com", "Male", "123", "", "", "", "", "", "", false,
 						"Invalid data: mobile less than 10 digits" },
-				{ "John", "Doe", "john@test.com", "Male", "12345678901", "", "", "", "", "", "", false,
-						"Invalid data: mobile more than 10 digits" },
+				{ "John", "Doe", "john@test.com", "Male", "12345678901", "", "", "", "", "", "", true,
+						"Valid data: mobile >10 digits truncated to 10 by maxlength" },
 				{ "John", "Doe", "notanemail", "Male", "1234567890", "", "", "", "", "", "", false,
 						"Invalid data: wrong email format" }, };
 	}

@@ -132,14 +132,17 @@ public class PracticeFormPage extends BasePage {
 		scrollToAndClick(stateControl);
 		By option = By.cssSelector("#div_id_state .custom-dropdown-option[data-value='" + state + "']");
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.elementToBeClickable(option)).click();
+		WebElement opt = wait.until(ExpectedConditions.presenceOfElementLocated(option));
+		// JS click: the dropdown option's native click is geometrically intercepted
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", opt);
 	}
 
 	public void selectCity(String city) {
 		scrollToAndClick(cityControl);
 		By option = By.cssSelector("#div_id_city .custom-dropdown-option[data-value='" + city + "']");
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.elementToBeClickable(option)).click();
+		WebElement opt = wait.until(ExpectedConditions.presenceOfElementLocated(option));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", opt);
 	}
 
 	// Scroll and click element method(shared):

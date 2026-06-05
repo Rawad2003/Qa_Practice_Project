@@ -38,10 +38,12 @@ public class PopUpPage extends BasePage {
 	}
 
 	public void navigateToModal() {
+		driver.switchTo().defaultContent();
 		driver.get(URL_MODAL);
 	}
 
 	public void navigateToIframePopup() {
+		driver.switchTo().defaultContent();
 		driver.get(IFRAME_POPUP);
 	}
 
