@@ -5,9 +5,9 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.practice.QAPractice.BasePage.BaseSetupManager;
+import com.practice.QAPractice.BasePage.BaseTest;
 
-public class MiddleBarTest extends BaseSetupManager {
+public class MiddleBarTest extends BaseTest {
 	@DataProvider(name = "middleBarVisibilityData")
 	public Object[][] middleBarVisibilityData() {
 		return new Object[][] { { "Text input", true }, { "Simple button", true }, { "Single checkbox", true },
@@ -33,7 +33,7 @@ public class MiddleBarTest extends BaseSetupManager {
 	public void test_MiddleBar_LinkIsVisible(String linkName, boolean expected) throws Exception {
 		MiddleBarPage page = new MiddleBarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(500);
+		waitForPageReady();
 		By locator = getLocatorByName(page, linkName);
 		boolean isVisible = page.isLinkVisible(locator);
 		Assert.assertEquals(isVisible, expected, "Visibility failed for: " + linkName);
@@ -43,7 +43,7 @@ public class MiddleBarTest extends BaseSetupManager {
 	public void test_MiddleBar_LinkIsEnabled(String linkName, boolean expected) throws Exception {
 		MiddleBarPage page = new MiddleBarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(500);
+		waitForPageReady();
 		By locator = getLocatorByName(page, linkName);
 		boolean isEnabled = page.isLinkEnabled(locator);
 		Assert.assertEquals(isEnabled, expected, "Enabled failed for: " + linkName);
@@ -54,10 +54,10 @@ public class MiddleBarTest extends BaseSetupManager {
 			throws Exception {
 		MiddleBarPage page = new MiddleBarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(5000);
+		waitForPageReady();
 		By locator = getLocatorByName(page, linkName);
 		String actualUrl = page.clickAndGetUrl(locator);
-		Thread.sleep(5000);
+		waitForPageReady();
 		boolean result = actualUrl.contains(expectedUrlContains);
 		Assert.assertEquals(result, expected, "URL check failed for: " + linkName + "\nExpected tp contain: "
 				+ expectedUrlContains + "\nActual URL: " + actualUrl);
@@ -68,10 +68,10 @@ public class MiddleBarTest extends BaseSetupManager {
 			throws Exception {
 		MiddleBarPage page = new MiddleBarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(5000);
+		waitForPageReady();
 		By locator = getLocatorByName(page, linkName);
 		page.clickAndGetUrl(locator);
-		Thread.sleep(5000);
+		waitForPageReady();
 		String pageTitle = driver.getTitle();
 		Assert.assertFalse(pageTitle.contains("404"),
 				"Broken link (404) found for: " + linkName + "\nPage title: " + pageTitle);
@@ -81,7 +81,7 @@ public class MiddleBarTest extends BaseSetupManager {
 	public void test_MiddleBar_CorrectNumberOfLinks() throws Exception {
 		MiddleBarPage page = new MiddleBarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(500);
+		waitForPageReady();
 		int count = 0;
 		if (page.isLinkVisible(page.getLinkTextInput()))
 			count++;
@@ -100,7 +100,7 @@ public class MiddleBarTest extends BaseSetupManager {
 	public void test_MiddleBar_CorrectOrderOfLinks(int position, String linkName, boolean expected) throws Exception {
 		MiddleBarPage page = new MiddleBarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(500);
+		waitForPageReady();
 		By locator = By.xpath("//ol");
 		String actualText = driver.findElement(locator).getText().trim();
 		boolean result = actualText.contains(linkName);

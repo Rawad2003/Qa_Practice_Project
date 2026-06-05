@@ -2,7 +2,7 @@ package com.practice.QAPractice.SideBar;
 
 import org.testng.annotations.Test;
 
-import com.practice.QAPractice.BasePage.BaseSetupManager;
+import com.practice.QAPractice.BasePage.BaseTest;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,7 +12,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 
-public class SidebarTest extends BaseSetupManager {
+public class SidebarTest extends BaseTest {
 
 	@DataProvider(name = "sidebarNavigationData")
 	public Object[][] sidebarNavigationData() {
@@ -38,7 +38,7 @@ public class SidebarTest extends BaseSetupManager {
 	public void test_Sidebar_LinkIsVisible(String linkName, boolean expected) throws Exception {
 		SidebarPage page = new SidebarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(5000);
+		waitForPageReady();
 		expandIfNeeded(page, linkName);
 		By locator = getLocatorByName(page, linkName);
 		boolean isVisible = page.isLinkVisible(locator);
@@ -49,7 +49,7 @@ public class SidebarTest extends BaseSetupManager {
 	public void test_Sidebar_LinkIsEnabled(String linkName, boolean expected) throws Exception {
 		SidebarPage page = new SidebarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(5000);
+		waitForPageReady();
 		expandIfNeeded(page, linkName);
 		By locator = getLocatorByName(page, linkName);
 		boolean isEnabled = page.isLinkEnabled(locator);
@@ -61,11 +61,11 @@ public class SidebarTest extends BaseSetupManager {
 			throws Exception {
 		SidebarPage page = new SidebarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(5000);
+		waitForPageReady();
 		expandIfNeeded(page, linkName);
 		By locator = getLocatorByName(page, linkName);
 		String actualUrl = page.clickAndGetUrl(locator);
-		Thread.sleep(5000);
+		waitForPageReady();
 		boolean result = actualUrl.contains(expectedUrlContains);
 		Assert.assertEquals(result, expected, "URL check failed for: " + linkName + "\nExpected tp contain: "
 				+ expectedUrlContains + "\nActual URL: " + actualUrl);
@@ -76,11 +76,11 @@ public class SidebarTest extends BaseSetupManager {
 			throws Exception {
 		SidebarPage page = new SidebarPage(driver);
 		page.navigateToBase();
-		Thread.sleep(5000);
+		waitForPageReady();
 		expandIfNeeded(page, linkName);
 		By locator = getLocatorByName(page, linkName);
 		page.clickAndGetUrl(locator);
-		Thread.sleep(5000);
+		waitForPageReady();
 		String pageTitle = driver.getTitle();
 		Assert.assertFalse(pageTitle.contains("404"),
 				"Broken link (404) found for: " + linkName + "\nPage title: " + pageTitle);
