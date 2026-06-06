@@ -1,0 +1,8 @@
+target/
+test-output/
+*.zip
+*.class
+for claude/
+.settings/
+.classpath
+.project
